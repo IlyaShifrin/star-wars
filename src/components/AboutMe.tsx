@@ -1,16 +1,20 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {characters, defaultHero, period_month} from "../utils/constants.js";
 import {HeroInfo} from "../utils/types.d.tsx";
 import {useParams} from "react-router-dom";
+import {SWContext} from "../utils/context.ts";
 
 const AboutMe = () => {
     const [hero, setHero] = useState<HeroInfo>();
-    let {heroId = defaultHero} = useParams();
+    let {heroId= defaultHero} = useParams();
+
+    const {changeHeroName} = useContext(SWContext);
 
     useEffect(() => {
         if (!characters[heroId]) {
             heroId = defaultHero;
         }
+        changeHeroName(heroId);
         const hero = JSON.parse(localStorage.getItem(heroId)!);
         if (hero && ((Date.now() - hero.timestamp) < period_month)) {
             setHero(hero.payload);
