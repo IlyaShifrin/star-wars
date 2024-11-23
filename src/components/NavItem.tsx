@@ -1,13 +1,17 @@
-interface  Props {
-    itemTitle: string
+import {Item} from "../utils/types.d.tsx";
+import {NavLink} from "react-router-dom";
+
+interface Props {
+    item: Item
 }
 
-const NavItem = ({itemTitle}: Props) => {
+const NavItem = ({item}: Props) => {
 
     return (
-        <li className={`bg-red-color border-black border-2 rounded-[5px] px-3 py-2 cursor-pointer hover:text-white hover:bg-red-500`}>
-            <a href={`/${itemTitle}`}>{itemTitle}</a>
-        </li>
+        <NavLink
+            className={`bg-red-color border-black border-2 rounded-[5px] px-3 py-2 cursor-pointer hover:text-white hover:bg-red-500`}
+            to={`/${item.path}`}>{item.title}
+        </NavLink>
     );
 };
 
