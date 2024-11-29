@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import {characters, defaultHero, period_month} from "../utils/constants.ts";
 import {HeroInfo} from "../utils/types";
 import {useParams} from "react-router-dom";
-import ErrorPage from "./ErrorPage.tsx";
 import {withErrorPage} from "../hoc/withErrorPage.tsx";
 
 const AboutMe = () => {
@@ -37,18 +36,17 @@ const AboutMe = () => {
 
     }, [heroId])
 
-    return characters[heroId] ? (
-            <>
-                {(!!hero) &&
-                    <div className={`text-[2em] text-justify tracking-[.2em] leading-normal ml-8`}>
-                        {Object.keys(hero).map(key => <p key={key}><span
-                            className={`text-[1.25em] capitalize`}>{key.replace('_', ' ')}:</span> {hero[key as keyof HeroInfo]}
-                        </p>)}
-                    </div>
-                }
-            </>
-        )
-        : <ErrorPage/>
+    return (
+        <>
+            {(!!hero) &&
+                <div className={`text-[2em] text-justify tracking-[.2em] leading-normal ml-8`}>
+                    {Object.keys(hero).map(key => <p key={key}><span
+                        className={`text-[1.25em] capitalize`}>{key.replace('_', ' ')}:</span> {hero[key as keyof HeroInfo]}
+                    </p>)}
+                </div>
+            }
+        </>
+    )
 }
 
 export default withErrorPage(AboutMe);
