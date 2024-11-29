@@ -1,10 +1,14 @@
 import {useParams} from "react-router-dom";
 import {characters, defaultHero} from "../utils/constants.ts";
-import {useContext, useEffect} from "react";
+import {ComponentType, useContext, useEffect} from "react";
 import {SWContext} from "../utils/context.ts";
 import ErrorPage from "../components/ErrorPage.tsx";
 
-export const withErrorPage = (Component: React.FC) => (props: object) => {
+interface Props {
+    heroId: string;
+}
+
+export const withErrorPage = (Component: ComponentType<Props>) => (props: object) => {
     const {heroId = defaultHero} = useParams();
     const {changeHero} = useContext(SWContext);
 
@@ -15,5 +19,5 @@ export const withErrorPage = (Component: React.FC) => (props: object) => {
 
     }, [heroId])
 
-    return characters[heroId] ? <Component {...props}/> : <ErrorPage/>;
+    return characters[heroId] ? <Component heroId={heroId} {...props}/> : <ErrorPage/>;
 }
